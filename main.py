@@ -51,7 +51,7 @@ def web():
         try:  # Если каких то данных нет то ждем
             products = ch.find_elements_by_class_name('card-product__content')
             if len(products) == 0:
-                permission = False
+                permission = True
                 break
             for i in products:
                 name_product = i.find_element_by_class_name('shaved-text__original-text').text
