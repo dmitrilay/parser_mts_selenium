@@ -34,15 +34,18 @@ def web():
         input_p.send_keys(Keys.ENTER)
 
     dict_product = {}
+    head, tail = os.path.split(__file__)
+    name_ch = os.path.normpath(f'{head}/chromedriver/chromedriver.exe')
     options = Options()
     options.add_experimental_option('prefs', options_web)
-    ch = webdriver.Chrome(options=options)
+    ch = webdriver.Chrome(name_ch, options=options)
+
     ch.get("https://shop.mts.ru/catalog/smartfony/")
     sleep(1)
     select_city('Омск', ch)
     sleep(4)
     error_count = 0
-    permission = True
+    permission = False
     page_number = 1
     while permission:
         try:  # Если каких то данных нет то ждем
