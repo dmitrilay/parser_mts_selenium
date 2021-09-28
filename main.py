@@ -6,18 +6,7 @@ from selenium.webdriver.chrome.options import Options
 import os
 import datetime
 from openpyxl import Workbook, load_workbook
-
-options = Options()
-options.add_experimental_option(
-    'prefs',
-    {
-        # 'profile.managed_default_content_settings.javascript': 2,
-        'profile.managed_default_content_settings.images': 2,
-        # 'profile.managed_default_content_settings.mixed_script': 2,
-        'profile.managed_default_content_settings.media_stream': 2,
-        'profile.managed_default_content_settings.stylesheets': 2
-    }
-)
+from settings import *
 
 
 # def scrolling(driver):
@@ -45,6 +34,8 @@ def web():
         input_p.send_keys(Keys.ENTER)
 
     dict_product = {}
+    options = Options()
+    options.add_experimental_option('prefs', options_web)
     ch = webdriver.Chrome(options=options)
     ch.get("https://shop.mts.ru/catalog/smartfony/")
     sleep(1)
@@ -89,13 +80,13 @@ def web():
     return dict_product
 
 
-def writing_file_excel2(price_list, name_f):
+def writing_file_excel(price_list, name_f):
     """ Входные данные - словарь"""
-    head, tail = os.path.split(__file__)
-    current_time = datetime.datetime.now().strftime("%d-%m-%y_%H-%M") + '_'
-    name_f = os.path.normpath(f'{head}/data/{name_f}_{current_time}.xlsx')
+    # head, tail = os.path.split(__file__)
+    # current_time = datetime.datetime.now().strftime("%d-%m-%y_%H-%M") + '_'
+    # name_f = os.path.normpath(f'{head}/data/{name_f}_{current_time}.xlsx')
     # name_f = os.path.normpath(f'{head}/data/{name_f}.xlsx')
-    # name_f = os.path.normpath(name_f)
+    name_f = os.path.normpath(name_f)
     wb = Workbook()
     ws = wb.active
     row = 1
@@ -111,5 +102,4 @@ def writing_file_excel2(price_list, name_f):
 
 
 data = web()
-p0 = "C:/Users/dmitr/OneDrive/Документы/1_Parser/dns.xlsx"
-writing_file_excel2(data, 'test.xlsx')
+writing_file_excel(data, file_path)
